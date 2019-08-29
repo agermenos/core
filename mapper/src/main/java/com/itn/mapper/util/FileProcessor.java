@@ -1,4 +1,4 @@
-package com.itn.mapper.action;
+package com.itn.mapper.util;
 
 import org.springframework.integration.file.FileHeaders;
 import org.springframework.messaging.Message;
@@ -18,7 +18,7 @@ public class FileProcessor {
     public void process(Message<String> msg) {
         String fileName = (String) msg.getHeaders().get(HEADER_FILE_NAME);
         String content = msg.getPayload();
-
+        String[] lines = content.split("\r\n");
         System.out.println(String.format(MSG, fileName, content));
         moveFile(msg);
     }
