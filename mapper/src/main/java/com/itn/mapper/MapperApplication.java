@@ -1,17 +1,18 @@
 package com.itn.mapper;
 
+import com.itn.mapper.action.FileProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.integration.annotation.InboundChannelAdapter;
-import org.springframework.integration.annotation.Poller;
-import org.springframework.integration.annotation.Transformer;
+import org.springframework.integration.annotation.*;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.core.MessageSource;
-import org.springframework.integration.dsl.*;
+import org.springframework.integration.dsl.IntegrationFlow;
+import org.springframework.integration.dsl.IntegrationFlows;
+import org.springframework.integration.dsl.MessageChannels;
 import org.springframework.integration.file.FileReadingMessageSource;
-import org.springframework.integration.file.dsl.Files;
 import org.springframework.integration.file.filters.SimplePatternFileListFilter;
 import org.springframework.integration.file.transformer.FileToStringTransformer;
 import org.springframework.messaging.MessageChannel;
@@ -21,9 +22,11 @@ import java.io.File;
 @SpringBootApplication
 public class MapperApplication {
 
-    private static final String BASIC_PATH = "/Users/agermenos/dev/files";
+    private static final String BASIC_PATH = "c:/dev/files";
     private static final String INBOUND_PATH = "/input";
-    private static final String OUTBOUND_PATH= "/output";
+
+    @Autowired
+    FileProcessor fileProcessor;
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(MapperApplication.class).web(WebApplicationType.NONE).run(args);
@@ -48,6 +51,14 @@ public class MapperApplication {
     @Transformer(inputChannel = "fileInputChannel", outputChannel = "processFileChannel")
     public FileToStringTransformer fileToStringTransformer() {
         return new FileToStringTransformer();
+    }
+
+    @Bean
+    public IntegrationFlow processFileFlow() {
+        return IntegrationFlows
+                .from("fileInputChannel")
+                .transform(fileToStringTransformer())
+                .handle("fileProcessor", "process").get();
     }
 
 }
