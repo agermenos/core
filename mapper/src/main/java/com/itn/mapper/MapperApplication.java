@@ -59,6 +59,5 @@ public class MapperApplication {
                 .transform(fileToStringTransformer())
                 .handle("fileProcessor", "process").get();
     }
-
 }
 
