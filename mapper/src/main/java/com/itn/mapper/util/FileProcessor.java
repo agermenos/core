@@ -8,7 +8,7 @@ import java.io.File;
 
 @Component("fileProcessor")
 public class FileProcessor {
-    private static final String BASIC_PATH = "c:/dev/files";
+    private static final String BASIC_PATH = "/Users/agermenos/dev/files";
     private static final String INBOUND_PATH = "/input";
     private static final String OUTBOUND_PATH= "/output";
 
