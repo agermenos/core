@@ -10,10 +10,7 @@ import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component("fileProcessor")
 public class FileProcessor {
@@ -33,16 +30,21 @@ public class FileProcessor {
 
     public void process(Message<String> msg) {
         String fileName = (String) msg.getHeaders().get(HEADER_FILE_NAME);
+        UUID uuid = UUID.randomUUID();
+        String randomUUID = uuid.toString();
         String content = msg.getPayload();
         String[] lines = content.split("\r\n");
-        Integer key = Integer.parseInt(lines[1].substring(1,2));
+        String[] header = lines[1].split("\\|");
+        Integer key = Integer.parseInt(header[1]);
         List<LineItemDefinition> lineItemDefinitions = getLineItemDefinition(lines[1], key);
         Arrays.stream(lines).skip(2).forEach(line -> {
-                if (line.length()>15)
+                String type = line.substring(0,2);
+                if (line.length()>15 && type.equals("II"))
                 lineItemRepository.save(LineItem.builder()
                     .tenantId(key)
                     .content(line)
                     .status(STATUS_OK)
+                    .invoiceId(randomUUID)
                     .build());
         });
         System.out.println(String.format(MSG, fileName, content));
@@ -52,7 +54,7 @@ public class FileProcessor {
     private List<LineItemDefinition> getLineItemDefinition(String line, Integer key) {
         if (currentDefinitions.containsKey(key)) return currentDefinitions.get(key);
         else {
-            List<LineItemDefinition> lineItemDefinitions = lineItemDefinitionRepository.findAllByTenantIdAAndStatusIdOrderByIdx(key, STATUS_OK);
+            List<LineItemDefinition> lineItemDefinitions = lineItemDefinitionRepository.findAllByTenantIdOrderByIdx(key);
             currentDefinitions.put(key, lineItemDefinitions);
             return lineItemDefinitions;
         }

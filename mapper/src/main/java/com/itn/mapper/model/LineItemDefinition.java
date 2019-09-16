@@ -2,14 +2,22 @@ package com.itn.mapper.model;
 
 import lombok.Data;
 
+import javax.persistence.*;
+
 @Data
+@Entity
 public class LineItemDefinition {
-    private int id;
-    private int tenantId;
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
+    @Column(name="tenant_id")
+    private Integer tenantId;
+    @Column(name="field_name")
     private String fieldName;
+    @Column(name="field_type_id")
     private String fieldType;
+    @Column(name="idx")
     private int idx;
-    private int size;
-    private int statusId;
-    private char lineSeparator;
+    @Column(name="size")
+    private Integer size;
 }

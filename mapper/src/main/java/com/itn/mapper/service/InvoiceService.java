@@ -21,7 +21,7 @@ public class InvoiceService {
     LineItemDefinitionRepository lineItemDefinitionRepository;
 
     public List<JSONObject> getInvoiceByTenantAndDate(Integer tenantId, Date date) {
-        List<LineItemDefinition> lineItemDefinitions = lineItemDefinitionRepository.findAllByTenantIdAAndStatusIdOrderByIdx(tenantId, STATUS_LIVE);
+        List<LineItemDefinition> lineItemDefinitions = lineItemDefinitionRepository.findAllByTenantIdOrderByIdx(tenantId);
         List<LineItem> lineItems = lineItemRepository.findAllByTenantIdAndDatetimeAndStatus(tenantId, date, STATUS_LIVE);
         return lineItems.parallelStream().map(lineItem -> {
             String strLineItem = lineItem.getContent();

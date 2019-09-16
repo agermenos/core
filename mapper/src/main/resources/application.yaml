@@ -3,3 +3,8 @@ spring:
     url: jdbc:mysql://localhost/mapper?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
     password: password
+
+jpa:
+  repositories:
+    base-package: com.itn.mapper.dao
+  show-sql: true
