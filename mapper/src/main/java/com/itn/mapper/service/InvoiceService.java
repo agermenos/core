@@ -23,7 +23,7 @@ public class InvoiceService {
     public List<JSONObject> getInvoiceByTenantAndDate(Integer tenantId, Date date) {
         List<LineItemDefinition> lineItemDefinitions = lineItemDefinitionRepository.findAllByTenantIdAAndStatusIdOrderByIdx(tenantId, STATUS_LIVE);
         List<LineItem> lineItems = lineItemRepository.findAllByTenantIdAndDatetimeAndStatus(tenantId, date, STATUS_LIVE);
-        List<JSONObject> itemMap = lineItems.parallelStream().map(lineItem -> {
+        return lineItems.parallelStream().map(lineItem -> {
             String strLineItem = lineItem.getContent();
             Map<String, String> jsonMap = new HashMap<>();
             lineItemDefinitions.forEach(definition ->
@@ -31,6 +31,5 @@ public class InvoiceService {
             JSONObject returnObject = new JSONObject(jsonMap);
             return returnObject;
         }).collect(Collectors.toList());
-        return itemMap;
     }
 }
