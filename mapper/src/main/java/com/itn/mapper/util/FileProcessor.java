@@ -21,7 +21,7 @@ public class FileProcessor {
     LineItemDefinitionRepository lineItemDefinitionRepository;
 
     private Map<Integer, List<LineItemDefinition>> currentDefinitions = new HashMap<>();
-    private static final String BASIC_PATH = "c:/dev/files";
+    private static final String BASIC_PATH = "/Users/agermenos/dev/files";
     private static final String INBOUND_PATH = "/input";
     private static final String OUTBOUND_PATH= "/output";
 
@@ -36,7 +36,7 @@ public class FileProcessor {
         String[] lines = content.split("\r\n");
         String[] header = lines[1].split("\\|");
         Integer key = Integer.parseInt(header[1]);
-        List<LineItemDefinition> lineItemDefinitions = getLineItemDefinition(lines[1], key);
+        //List<LineItemDefinition> lineItemDefinitions = getLineItemDefinition(lines[1], key);
         Arrays.stream(lines).skip(2).forEach(line -> {
                 String type = line.substring(0,2);
                 if (line.length()>15 && type.equals("II"))

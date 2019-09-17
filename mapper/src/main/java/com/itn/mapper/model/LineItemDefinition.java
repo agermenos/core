@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Entity
+@Entity (name = "line_item_definition")
 public class LineItemDefinition {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

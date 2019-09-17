@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface LineItemRepository extends JpaRepository<LineItem, Integer> {
-    List<LineItem> findAllByTenantIdAndDatetimeAndStatus(Integer tenantId, Date date, Integer status);
+    List<LineItem> findAllByInvoiceId(String invoiceId);
 }
