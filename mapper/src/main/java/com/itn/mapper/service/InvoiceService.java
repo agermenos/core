@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import org.json.JSONObject;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -19,7 +22,7 @@ public class InvoiceService {
     @Autowired
     LineItemDefinitionRepository lineItemDefinitionRepository;
 
-    public List<JSONObject> getInvoiceByInvoiceId(int tenantId, String invoiceId) {
+    public List<Map<String, String>> getInvoiceByInvoiceId(int tenantId, String invoiceId) {
         List<LineItemDefinition> lineItemDefinitions = lineItemDefinitionRepository.findAllByTenantIdOrderByIdx(tenantId);
         List<LineItem> lineItems = lineItemRepository.findAllByInvoiceId(invoiceId);
         return lineItems.parallelStream().map(lineItem -> {
@@ -27,10 +30,13 @@ public class InvoiceService {
             Map<String, String> jsonMap = new HashMap<>();
             int index =0;
             for (String field:strLineItems) {
-                LineItemDefinition definition = lineItemDefinitions.get(index++);
-                jsonMap.put(definition.getFieldName(), field);
+                if (index<lineItemDefinitions.size()) {
+                    LineItemDefinition definition = lineItemDefinitions.get(index++);
+                    jsonMap.put(definition.getFieldName(), field);
+                }
+                else break;
             }
-            return new JSONObject(jsonMap);
+            return jsonMap;
         }).collect(Collectors.toList());
     }
 }

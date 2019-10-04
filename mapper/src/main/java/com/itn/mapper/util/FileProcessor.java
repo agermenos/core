@@ -21,7 +21,7 @@ public class FileProcessor {
     LineItemDefinitionRepository lineItemDefinitionRepository;
 
     private Map<Integer, List<LineItemDefinition>> currentDefinitions = new HashMap<>();
-    private static final String BASIC_PATH = "/Users/agermenos/dev/files";
+    private static final String BASIC_PATH = "C:/dev/files";
     private static final String INBOUND_PATH = "/input";
     private static final String OUTBOUND_PATH= "/output";
 

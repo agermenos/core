@@ -1,5 +1,6 @@
 package com.itn.mapper.model;
 
+import javafx.scene.shape.Line;
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,7 +8,6 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@Builder
 @Entity(name = "line_items")
 public class LineItem {
     @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -22,6 +22,19 @@ public class LineItem {
     private int status;
     @Column(name="invoice_id")
     private String invoiceId;
+
+    public LineItem(){
+        super();
+    }
+
+    @Builder
+    public LineItem(int tenantId, String content, int status, String invoiceId) {
+        this.tenantId = tenantId;
+        this.content = content;
+        this.status = status;
+        this.invoiceId = invoiceId;
+    }
+
     @PrePersist
     public void preUpdate(){
         if (datetime==null) datetime=new Date();
