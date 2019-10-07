@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,8 @@ import java.util.Map;
 public class InvoiceController {
     @Autowired
     InvoiceService invoiceService;
+//    @Autowired
+//    private BPSecurity bpSecurity;
 
     @GetMapping(value = "/{tenantId}/{invoiceId}")
     public ResponseEntity<Object> getInvoices(@PathVariable("tenantId") Integer tenantId, @PathVariable("invoiceId") String invoiceId){
