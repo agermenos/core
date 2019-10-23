@@ -1,4 +1,4 @@
 package com.itn.mapper.model;
 
-public class Product {
+public class Category {
 }
