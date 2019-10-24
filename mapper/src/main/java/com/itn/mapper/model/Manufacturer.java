@@ -8,16 +8,15 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name="brands")
-public class Brand {
+@Table(name="mastercatalogs")
+public class Manufacturer {
     @Id
-    @GeneratedValue
-    @Column(name="BrandID")
-    Integer brandId;
-    @Column(name="BrandName")
-    String brandName;
+    @Column (name = "ManufacturerID")
+    Integer manufacturerId;
+    @Column (name = "ManufacturerName")
+    String manufacturerName;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "ManufacturerID", nullable = false)
+    @JoinColumn(name = "DistributorID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    Manufacturer manufacturer;
+    Distributor distributor;
 }
