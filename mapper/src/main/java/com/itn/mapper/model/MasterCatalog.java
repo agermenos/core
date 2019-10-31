@@ -21,8 +21,6 @@ public class MasterCatalog {
     String productName;
     @Column(name = "Description")
     String description;
-    @Column(name = "DistributorID")
-    Integer distributorId;
     @Column(name = "BreakLevel")
     Integer breakLevel;
     @Column(name = "Pack")
@@ -35,6 +33,10 @@ public class MasterCatalog {
     @JoinColumn(name = "BrandID", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     Brand brand;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "DistributorID", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    Distributor distributor;
     @Column(name = "ManufacturerNo")
     String manufacturerNo;
     @Column(name = "UPC")
