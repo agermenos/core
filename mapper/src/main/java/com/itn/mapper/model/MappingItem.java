@@ -1,5 +1,6 @@
 package com.itn.mapper.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="mappingitems")
 @IdClass(MappingItemId.class)
+@Builder
 public class MappingItem {
     @Id
     @Column (name="MappingID")

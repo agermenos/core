@@ -1,7 +1,5 @@
 package com.itn.mapper;
 
-import com.itn.mapper.util.FileProcessor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -23,9 +21,6 @@ public class MapperApplication {
 
     private static final String BASIC_PATH = "c:/dev/files";
     private static final String INBOUND_PATH = "/input";
-
-    @Autowired
-    FileProcessor fileProcessor;
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(MapperApplication.class).web(WebApplicationType.SERVLET).run(args);

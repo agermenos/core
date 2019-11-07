@@ -1,16 +1,19 @@
 package com.itn.mapper.model;
 
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @Entity
+@Builder
 @Table(name="mastercatalogs")
-public class MasterCatalog {
+public class MasterCatalogItem implements Serializable {
     @Id
     @GeneratedValue
     @Column(name="MasterID")

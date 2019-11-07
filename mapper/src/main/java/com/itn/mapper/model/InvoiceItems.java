@@ -17,6 +17,8 @@ public class InvoiceItems {
     Integer distributorId;
     @Column (name = "ManufacturerNo")
     String manufacturerNo;
+    @Column(name = "ProductNo")
+    String productNo;
     @Column (name = "Description")
     String description;
     @Column (name = "Pack")
