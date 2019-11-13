@@ -13,8 +13,8 @@ public class MasterCatalogService {
     MasterCatalogsDao masterCatalogsDao;
 
     public List<MasterCatalogItem> addProducts(List<MasterCatalogItem> items) {
-        List<MasterCatalogItem> values = masterCatalogsDao.saveAll(items);
-        return values;
+        items.forEach(item -> masterCatalogsDao.save(item));
+        return items;
     }
 
     public MasterCatalogItem addProduct(MasterCatalogItem item) {
